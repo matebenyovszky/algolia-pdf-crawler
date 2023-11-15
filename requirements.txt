@@ -1,0 +1,4 @@
+- Python 3.6
+- Beautiful Soup
+- Requests
+- Tesseract
