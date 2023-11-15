@@ -1,0 +1,13 @@
+version: '3'
+services:
+  algolia-crawler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ALGOLIA_API_KEY=${ALGOLIA_API_KEY}
+      - ALGOLIA_APP_ID=${ALGOLIA_APP_ID}
+      - ALGOLIA_INDEX_NAME=${ALGOLIA_INDEX_NAME}
+    volumes:
+      - ./config.json:/app/config.json
+    command: python algolia-crawler.py

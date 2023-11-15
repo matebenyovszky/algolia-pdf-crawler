@@ -1,4 +1,3 @@
-- Python 3.6
-- Beautiful Soup
-- Requests
-- Tesseract
+BeautifulSoup
+requests
+python-dotenv

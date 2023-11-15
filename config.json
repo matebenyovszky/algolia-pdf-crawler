@@ -1,0 +1,14 @@
+{
+  "websites": [
+    {
+      "url": "https://integritashatosag.hu/",
+      "language": "hu"
+    },
+    {
+      "url": "https://integritashatosag.hu/en/",
+      "language": "en"
+    }
+  ],
+  "pdf_scrape_enabled": true,
+  "upload_enabled": false
+}
