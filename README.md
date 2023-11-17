@@ -1,9 +1,19 @@
-# Test Algolia Crawler
+### Algolia PDF Crawler
 
-This repository contains the code for a web crawler developed by Mate Benyovszky. The web crawler is designed to collect data and integrate it with Algolia search engine. The repository includes the following files:
+This repository contains a PDF crawler that extracts text from PDF documents and uploads it to Algolia for indexing and searching.
 
-- `algolia_integration.py`: Python script for integrating the collected data with Algolia.
-- `crawler.py`: Python script for web crawling and data collection.
-- `ocr.py`: Python script for optical character recognition.
+#### Usage
 
-Feel free to explore the code in this repository and contribute to its development.
+To use the PDF crawler, follow these steps:
+
+1. Set up the environment by installing the required packages from `requirements.txt`
+2. Run the docker-compose file to start the crawler service.
+3. The crawler will start processing PDF documents and uploading the extracted text to the configured Algolia index.
+
+#### Contributions
+
+Contributions to the PDF crawler are welcome! Submit a pull request with any improvements or bug fixes.
+
+#### License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
