@@ -1,14 +1,19 @@
 {
   "websites": [
     {
-      "url": "https://integritashatosag.hu/",
-      "language": "hu"
+      "url": "https://integritashatosag.hu/en",
+      "base_url": "https://integritashatosag.hu", 
+      "skip": "no_skip",
+      "language": "en"
     },
     {
-      "url": "https://integritashatosag.hu/en/",
-      "language": "en"
+      "url": "https://integritashatosag.hu",
+      "base_url": "https://integritashatosag.hu", 
+      "skip": "https://integritashatosag.hu/en",
+      "language": "hu"
     }
   ],
   "pdf_scrape_enabled": true,
+  "msdiread_ocr_enabled": false,
   "upload_enabled": false
 }

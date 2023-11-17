@@ -9,7 +9,9 @@
             "type": "python",
             "request": "launch",
             "module": "main",
-            "justMyCode": true
+            "justMyCode": false,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

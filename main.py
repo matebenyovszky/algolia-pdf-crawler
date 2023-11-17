@@ -9,11 +9,14 @@ def main():
         config = json.load(f)
 
     pdf_scrape_enabled = config["pdf_scrape_enabled"]
+    msdiread_ocr_enabled = config["msdiread_ocr_enabled"]
     upload_enabled = config["upload_enabled"]
 
     for website in config["websites"]:
         website_url = website["url"]
+        website_base_url = website["base_url"]
         language = website["language"]
+        skip_url = website["skip"]
 
         print(f"Website URL: {website_url}")
         print(f"Language: {language}")
@@ -21,12 +24,14 @@ def main():
         if pdf_scrape_enabled:
             # PDF files
             from pdf_scraper import get_pdf_links
-            pdf_links = get_pdf_links(website_url, config["websites"])
+            pdf_links = get_pdf_links(website_url, website["base_url"], skip_url)
             print("PDF Scrape completed.")
 
-            from pdf_ocr import run_ocr_on_pdf
+        if msdiread_ocr_enabled:
+            from pdf_ocr_msdiread import run_ocr_on_pdf
             scraped_data = run_ocr_on_pdf(pdf_links)
             scraped_data["language"] = language
+            scraped_data["url"] = pdf_links
 
         if upload_enabled:
             # Upload data to Algolia
