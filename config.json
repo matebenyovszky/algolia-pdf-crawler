@@ -14,6 +14,6 @@
     }
   ],
   "pdf_scrape_enabled": true,
-  "msdiread_ocr_enabled": false,
+  "msdiread_ocr_enabled": true,
   "upload_enabled": false
 }

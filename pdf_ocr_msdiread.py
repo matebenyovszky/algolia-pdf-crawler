@@ -15,13 +15,13 @@ https://docs.microsoft.com/en-us/azure/applied-ai-services/form-recognizer/quick
 key = os.getenv('microsoft_di_key')
 endpoint = os.getenv('microsoft_di_endpoint')
 
-def run_ocr_on_pdf(file_url):
+def run_ocr_on_pdf(file_url, language):
     document_analysis_client = DocumentAnalysisClient(
         endpoint=endpoint, credential=AzureKeyCredential(key)
     )
     
     poller = document_analysis_client.begin_analyze_document_from_url(
-            "prebuilt-read", file_url)
+            "prebuilt-read", file_url[1])
     result = poller.result()
 
     # Create a dictionary to store the results
@@ -41,12 +41,5 @@ def run_ocr_on_pdf(file_url):
         page_dict["pcontent"] = content.strip()
 
         result_dict["pages"].append(page_dict)
-
-    for idx, paragraph in enumerate(result.paragraphs):
-        paragraph_dict = {}
-        paragraph_dict["prgnum"] = idx+1
-        paragraph_dict["prgcontent"] = paragraph.content
-
-        result_dict["paragraphs"].append(paragraph_dict)
 
     return result_dict
