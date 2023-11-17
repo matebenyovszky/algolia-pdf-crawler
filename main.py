@@ -1,7 +1,8 @@
-import json
-from datetime import datetime
+import threading
+import time
+from spinner import spinner_task
 
-# /algolia-pdf-crawler/.venv/Scripts/Activate.ps1
+# Load existing code with spinner
 
 def main():
     # Load configuration from config.json
@@ -30,6 +31,7 @@ def main():
 
         if upload_enabled:
             # Upload data to Algolia
+            threading.Thread(target=spinner_task).start()
             from algolia_upload import upload_to_algolia
             upload_to_algolia(scraped_data)
             print("Data uploaded to Algolia.")
