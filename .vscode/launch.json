@@ -5,13 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Module",
+            "name": "Python: Project",
             "type": "python",
             "request": "launch",
-            "module": "main",
-            "justMyCode": false,
+            "program": "main.py",
             "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}"
+            "justMyCode": true
         }
     ]
 }

@@ -16,11 +16,12 @@ def main():
             pdf_links = get_pdf_links(website["url"], website["base_url"], website["skip"])
             print("PDF Scrape completed.")
 
-        # Check if PDF-s alre already in the database. If not, go forward
-        from algolia import is_document_in_index
-        pdf_links = [link for link in pdf_links if not is_document_in_index(link)]
-        if not pdf_links:
-            continue
+        if config["upload_enabled"]:
+            # Check if PDF-s alre already in the database. If not, go forward
+            from algolia import is_document_in_index
+            pdf_links = [link for link in pdf_links if not is_document_in_index(link)]
+            if not pdf_links:
+                continue
 
         if config["msdiread_ocr_enabled"]:
             # OCR PDF files
