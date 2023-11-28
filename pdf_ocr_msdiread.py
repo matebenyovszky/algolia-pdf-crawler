@@ -1,6 +1,7 @@
 
 # import libraries
 import os
+import datetime
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
 
@@ -20,18 +21,19 @@ def run_ocr_on_pdf(file_url, language, base_url):
         endpoint=endpoint, credential=AzureKeyCredential(key)
     )
     
-    result_dicts = []
+    result_dict = []
     for url in file_url:
+        print(f"Pages processed (OCR): {len(result_dict)}", end='\r')
         full_url = base_url + url
         poller = document_analysis_client.begin_analyze_document_from_url(
             "prebuilt-read", full_url)
         result = poller.result()
 
         # Create a dictionary to store the results
-        result_dict = {}
+        #result_dict = {}
         #result_dict["engine"] = 'microsoft_di'
         #result_dict["content"] = result.content
-        result_dict["pages"] = []
+        #result_dict["pages"] = []
         #result_dict["paragraphs"] = []
         
         for page in result.pages:
@@ -40,14 +42,16 @@ def run_ocr_on_pdf(file_url, language, base_url):
             page_dict["language"] = language
             page_dict["path"] = url
             page_dict["title"] = os.path.basename(url).split('.')[0]
+            page_dict["objectID"] = f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}{page.page_number}"
 
             content = ""
             for line in page.lines:
                 content += line.content + " "
             page_dict["content"] = content.strip()
 
-            result_dict["pages"].append(page_dict)
+            #result_dict["pages"].append(page_dict)
+            result_dict.append(page_dict)
 
-        result_dicts.append(result_dict)
+        #result_dicts.append(result_dict)
 
-    return result_dicts
+    return result_dict
