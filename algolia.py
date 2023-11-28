@@ -8,8 +8,9 @@ algolia_api_key = os.getenv("ALGOLIA_API_KEY")
 algolia_app_id = os.getenv("ALGOLIA_APP_ID")
 algolia_index_name = os.getenv("ALGOLIA_INDEX_NAME")
 
-client = SearchClient.create('algolia_app_id', 'algolia_api_key')
-index = client.init_index('algolia_index_name')
+#Create client
+client = SearchClient.create(algolia_app_id, algolia_api_key)
+index = client.init_index(algolia_index_name)
 
 
 def upload_to_algolia():
@@ -44,12 +45,13 @@ def upload_to_algolia():
 def is_document_in_index(document_url):
     # Query the Algolia index for the document URL
 
-    # Replace YOUR_APP_ID and YOUR_API_KEY with your Algolia credentials
-    #client = SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
-    #index = client.init_index('your_index_name')
+    # Useful doc:
+    # https://www.algolia.com/doc/api-reference/search-api-parameters/
+    # https://www.algolia.com/doc/api-reference/api-parameters/filters/ 
+    #document = index.search(document_url, {'attributesToRetrieve': ['path', 'language'], 'filters': "language:'hu'", 'hitsPerPage': 50})
 
-    # Replace DOCUMENT_URL with the URL of the document you want to check
-    document = index.search('', {'filters': 'url:' + document_url})
+    #Assuming language is not relevant:
+    document = index.search(document_url, {'attributesToRetrieve': ['path', 'language']})
 
     if len(document['hits']) > 0:
         print('The document is present in the index database.')
@@ -57,3 +59,10 @@ def is_document_in_index(document_url):
     else:
         print('The document is not present in the index database.')
         return False
+
+def delete_all_pdf(index):
+    # https://www.algolia.com/doc/api-reference/api-methods/delete-by/
+    response = index.delete_by({
+      'filters': "path:'.pdf'"})
+    print('*.pdf deleted from index')
+    

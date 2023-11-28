@@ -59,7 +59,7 @@ def get_pdf_links(url, base_url, skip_url):
     print(f"\nNumber of PDF documents found: {num_pdf_links}")
 
     # Add "url" before links starting with "/"
-    pdf_links = [base_url + link if link.startswith("/") else link for link in pdf_links]
+    pdf_links = [link[len(base_url):] if link.startswith(base_url) else link for link in pdf_links]
     
     # Remove duplicate links
     pdf_links = list(set(pdf_links))

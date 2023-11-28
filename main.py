@@ -17,16 +17,19 @@ def main():
             print("PDF Scrape completed.")
 
         if config["upload_enabled"]:
-            # Check if PDF-s alre already in the database. If not, go forward
-            from algolia import is_document_in_index
-            pdf_links = [link for link in pdf_links if not is_document_in_index(link)]
-            if not pdf_links:
-                continue
+            if config["full_crawl"]:
+                from algolia import delete_all_pdf
+            else:
+                # Check if PDF-s alre already in the database. If not, go forward
+                from algolia import is_document_in_index
+                pdf_links = [link for link in pdf_links if not is_document_in_index(link)]
+                if not pdf_links:
+                    continue
 
         if config["msdiread_ocr_enabled"]:
             # OCR PDF files
             from pdf_ocr_msdiread import run_ocr_on_pdf
-            scraped_data = run_ocr_on_pdf(pdf_links, website["language"])
+            scraped_data = run_ocr_on_pdf(pdf_links, website["language"], website["base_url"])
 
         if config["upload_enabled"]:
             # Upload data to Algolia
