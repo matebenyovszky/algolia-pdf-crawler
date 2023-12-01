@@ -1,39 +1,8 @@
-import os
+    # Useful doc:
+    # https://www.algolia.com/doc/api-reference/search-api-parameters/
+    # https://www.algolia.com/doc/api-reference/api-parameters/filters/ 
 
-# Initialize the Algolia client with your Application ID and API Key
-from algoliasearch.search_client import SearchClient
-
-# Get Algolia API keys from environment variables
-algolia_api_key = os.getenv("ALGOLIA_API_KEY")
-algolia_app_id = os.getenv("ALGOLIA_APP_ID")
-algolia_index_name = os.getenv("ALGOLIA_INDEX_NAME")
-
-#Create client
-client = SearchClient.create(algolia_app_id, algolia_api_key)
-index = client.init_index(algolia_index_name)
-
-
-def upload_to_algolia(objects_to_upload):
-
-    # Az feltölteni kívánt objektumok
-    # objects_to_upload = [
-    #     {
-    #         'objectID': '1',
-    #         'title': 'Sample Title 1',
-    #         'content': 'Sample Content 1',
-    #         'language': 'en',
-    #         'excerpt': 'Sample excerpt 1',
-    #         'path': '/sample-path-1'
-    #     },
-    #     {
-    #         'objectID': '2',
-    #         'title': 'Sample Title 2',
-    #         'content': 'Sample Content 2',
-    #         'language': 'en',
-    #         'excerpt': 'Sample excerpt 2',
-    #         'path': '/sample-path-2'
-    #     }
-    # ]
+def upload_to_algolia(objects_to_upload, index):
 
     # Upload the object to Algolia
     try:
@@ -42,16 +11,14 @@ def upload_to_algolia(objects_to_upload):
     except Exception as e:
         print("An error occurred:", e)
 
-def is_document_in_index(document_url):
+def is_document_in_index(document_url, index):
     # Query the Algolia index for the document URL
-
-    # Useful doc:
-    # https://www.algolia.com/doc/api-reference/search-api-parameters/
-    # https://www.algolia.com/doc/api-reference/api-parameters/filters/ 
-    #document = index.search(document_url, {'attributesToRetrieve': ['path', 'language'], 'filters': "language:'hu'", 'hitsPerPage': 50})
 
     #Assuming language is not relevant:
     document = index.search(document_url, {'attributesToRetrieve': ['path', 'language']})
+
+    # response = index.search('',{'filters': 'language:"en"'}) - if language is relevant... should be added next versions - lang field should be crawled
+    #document = index.search(document_url, {'attributesToRetrieve': ['path', 'language'], 'filters': "language:'hu'", 'hitsPerPage': 50})
 
     if len(document['hits']) > 0:
         print('The document is present in the index database.')
@@ -61,8 +28,9 @@ def is_document_in_index(document_url):
         return False
 
 def delete_all_pdf(index):
+
     # https://www.algolia.com/doc/api-reference/api-methods/delete-by/
-    response = index.delete_by({
-      'filters': "path:'.pdf'"})
-    print('*.pdf deleted from index')
+    index.delete_by({'filters': 'type:"pdf"'})
+
+    return('*.pdf deleted from index')
     

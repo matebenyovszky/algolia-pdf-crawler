@@ -1,4 +1,4 @@
 BeautifulSoup
 requests
 azure-ai-formrecognizer
-
+algoliasearch

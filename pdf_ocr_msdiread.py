@@ -16,13 +16,14 @@ https://docs.microsoft.com/en-us/azure/applied-ai-services/form-recognizer/quick
 key = os.getenv('microsoft_di_key')
 endpoint = os.getenv('microsoft_di_endpoint')
 
-def run_ocr_on_pdf(file_url, language, base_url):
+def run_ocr_on_pdf(pdf_links, language, base_url):
     document_analysis_client = DocumentAnalysisClient(
         endpoint=endpoint, credential=AzureKeyCredential(key)
     )
     
     result_dict = []
-    for url in file_url:
+    for link in pdf_links:
+        url = link[0]  # Extracting the URL from the tuple
         print(f"Pages processed (OCR): {len(result_dict)}", end='\r')
         full_url = base_url + url
         poller = document_analysis_client.begin_analyze_document_from_url(
@@ -38,10 +39,13 @@ def run_ocr_on_pdf(file_url, language, base_url):
         
         for page in result.pages:
             page_dict = {}
-            page_dict["pnum"] = page.page_number
+            page_dict["type"] = 'pdf'
             page_dict["language"] = language
             page_dict["path"] = url
-            page_dict["title"] = os.path.basename(url).split('.')[0]
+            #page_dict["title"] = f"(PDF) {os.path.basename(url).split('.')[0]}.pdf" # First line of the PDF
+            page_dict["title"] = f"{link[1]} (PDF)"
+            #if page.lines:
+            #    page_dict["excerpt"] = page.lines[0].content
             page_dict["objectID"] = f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}{page.page_number}"
 
             content = ""
