@@ -25,7 +25,7 @@ def get_pdf_links(url, base_url, skip_url):
 
     for a_tag in soup.find_all('a', href=True):
         num_a_tags += 1
-        print(f"Number of links found: {num_a_tags}", end='\r')
+        print(f"  Number of links found: {num_a_tags}", end='\r')
         href = a_tag['href']
         if href.startswith("/"):
             href = base_url + href
@@ -56,7 +56,7 @@ def get_pdf_links(url, base_url, skip_url):
                         num_pdf_links += 1
     
     #print(f"Number of total <a> tags found: {num_a_tags}")
-    print(f"\nNumber of PDF documents found: {num_pdf_links}")
+    print(f"\n  Number of PDF documents found: {num_pdf_links}")
 
     # Add "url" before links starting with "/"
     pdf_links = [(link[0][len(base_url):], link[1]) if link[0].startswith(base_url) else link for link in pdf_links]
@@ -65,6 +65,6 @@ def get_pdf_links(url, base_url, skip_url):
     pdf_links = list(set(pdf_links))
     
     # Print number of items in "pdf_links"
-    print(f"Number of normalized PDF links: {len(pdf_links)}")
+    print(f"  Number of normalized PDF links: {len(pdf_links)}")
 
     return pdf_links

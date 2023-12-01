@@ -44,6 +44,7 @@ def run_ocr_on_pdf(pdf_links, language, base_url):
             page_dict["path"] = url
             #page_dict["title"] = f"(PDF) {os.path.basename(url).split('.')[0]}.pdf" # First line of the PDF
             page_dict["title"] = f"{link[1]} (PDF)"
+            page_dict["excerpt"] = '' # Needed so SimplyStatic won't show undefined
             #if page.lines:
             #    page_dict["excerpt"] = page.lines[0].content
             page_dict["objectID"] = f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}{page.page_number}"

@@ -1,3 +1,4 @@
 * check language of already uploaded PDF document upon partial crawl
 * In case of OCR-ed PDF, use text layer and / or metadata
 * Automated running
+* Save back text layer (to edit?)
