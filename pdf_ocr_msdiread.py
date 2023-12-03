@@ -44,6 +44,17 @@ def run_ocr_on_pdf(pdf_links, language, base_url):
             page_dict["path"] = url
             #page_dict["title"] = f"(PDF) {os.path.basename(url).split('.')[0]}.pdf" # First line of the PDF
             page_dict["title"] = f"{link[1]} (PDF)"
+
+
+
+
+# <a href="https://edit.integritashatosag.hu/wp-content/uploads/2023/11/Vagyonnyilatkozat_Biro_Ferenc_Pal-2023.pdf" target="_blank" rel="noreferrer noopener"><img src="https://edit.integritashatosag.hu/wp-content/uploads/2023/07/07_BF_button.png" alt="Képes link Biró Ferenc Pál vagyonnyilatkozatának megnyitásához" class="wp-image-899"/></a>
+
+
+
+
+
+
             page_dict["excerpt"] = '' # Needed so SimplyStatic won't show undefined
             #if page.lines:
             #    page_dict["excerpt"] = page.lines[0].content

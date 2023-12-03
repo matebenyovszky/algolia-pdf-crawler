@@ -36,7 +36,12 @@ def get_pdf_links(url, base_url, skip_url):
             # Check if the link ends with '.pdf'
             if href.endswith('.pdf'):
                 # If it's a PDF link, append it to the pdf_links list, also add the link title
-                pdf_links.append((href, a_tag.text))  # Save the href and the text from the a tag
+                if not a_tag.text or a_tag.text.strip() == '' or a_tag.text.startswith("<"):
+                    file_name = os.path.basename(href).replace('_', ' ').replace('-', ' ')
+                    pdf_links.append((href, file_name))
+                else:
+                    pdf_links.append((href, a_tag.text))  # Save the href and the text from the a tag
+
                 num_pdf_links += 1
         
             # Check if the link is an internal hyperlink (same domain name)
@@ -52,7 +57,13 @@ def get_pdf_links(url, base_url, skip_url):
                     # Check if the link ends with '.pdf'
                     if linked_href.endswith('.pdf') and not linked_href.startswith(skip_url):
                         # If it's a PDF link, append it to the pdf_links list, also add the link title
-                        pdf_links.append((linked_href, linked_a_tag.text))  # Save the href and the text from the a tag
+
+                        if not linked_a_tag.text or linked_a_tag.text.strip() == '' or linked_a_tag.text.startswith("<"):
+                            file_name = os.path.basename(linked_href).replace('_', ' ').replace('-', ' ')
+                            pdf_links.append((linked_href, file_name))
+                        else:
+                            pdf_links.append((linked_href, linked_a_tag.text))  # Save the href and the text from the a tag
+
                         num_pdf_links += 1
     
     #print(f"Number of total <a> tags found: {num_a_tags}")
